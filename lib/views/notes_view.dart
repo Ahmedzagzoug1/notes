@@ -14,9 +14,7 @@ class NotesView extends StatefulWidget {
 class _NotesViewState extends State<NotesView> {
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<NotesCubit>(
-      create: (context) => NotesCubit(),
-      child: Scaffold(
+    return  Scaffold(
           floatingActionButton: FloatingActionButton(
             onPressed: () {
               showModalBottomSheet(
@@ -29,7 +27,7 @@ class _NotesViewState extends State<NotesView> {
             },
             child: Icon(Icons.add),
           ),
-          body: NotesViewBody()),
-    );
+          body: NotesViewBody());
+    
   }
 }

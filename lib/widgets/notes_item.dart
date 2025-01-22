@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:note/cubits/notes_cubit/notes_cubit.dart';
 import 'package:note/models/note_model.dart';
 import 'package:note/widgets/edit_note_view.dart';
 
 class NotesItem extends StatelessWidget {
- final NoteModel note;
+  final NoteModel note;
 
   const NotesItem({super.key, required this.note});
 
@@ -14,7 +16,7 @@ class NotesItem extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => EditNoteView()));
+            context, MaterialPageRoute(builder: (context) => EditNoteView(note: note,)));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -37,7 +39,10 @@ class NotesItem extends StatelessWidget {
                             fontSize: 20)),
                   ),
                   trailing: IconButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      note.delete();
+                      BlocProvider.of<NotesCubit>(context).fetchNotes();
+                    },
                     icon: Icon(
                       FontAwesomeIcons.trash,
                       color: Colors.black,

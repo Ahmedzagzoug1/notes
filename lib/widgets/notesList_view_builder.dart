@@ -10,12 +10,18 @@ class NotesListViewBuilder extends StatelessWidget {
     // TODO: implement build
     return BlocBuilder<NotesCubit, NotesCubitState>(
       builder: (context, state) {
-     List<NoteModel>notes=   BlocProvider.of<NotesCubit>(context).notes!;
+
+        List<NoteModel> notes = context.watch<NotesCubit>().notes!;
+
         return Padding(
           padding: const EdgeInsets.all(4.0),
-          child: ListView.builder(itemCount: notes.length,itemBuilder: (context, index) {
-            return NotesItem(note: notes[index],);
-          }),
+          child: ListView.builder(
+              itemCount: notes.length,
+              itemBuilder: (context, index) {
+                return NotesItem(
+                  note: notes[index],
+                );
+              }),
         );
       },
     );

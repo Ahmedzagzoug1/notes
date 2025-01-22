@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:note/constants.dart';
 import 'package:note/cubits/add_note_cubit/add_note_cubit.dart';
 import 'package:note/cubits/notes_cubit/notes_cubit.dart';
 import 'package:note/models/note_model.dart';
 import 'package:note/widgets/custom_button.dart';
+import 'package:note/widgets/custom_listview_colors.dart';
 import 'package:note/widgets/custom_text_field.dart';
 
 class AddNoteForm extends StatefulWidget {
@@ -42,7 +44,10 @@ class _AddNoteFormState extends State<AddNoteForm> {
           onSaved: (value) {
             subtitle = value;
           },
+        ), SizedBox(
+          height: 16,
         ),
+        ListviewColor(),
         SizedBox(
           height: 16,
         ),
@@ -50,9 +55,7 @@ class _AddNoteFormState extends State<AddNoteForm> {
           listener: (context, state) {
             if (state is AddNoteCubitSucess) {
               BlocProvider.of<NotesCubit>(context).fetchNotes();
-              setState(() {
-                
-              });
+              setState(() {});
             }
           },
           child: BlocBuilder<AddNoteCubit, AddNoteCubitState>(
@@ -72,6 +75,9 @@ class _AddNoteFormState extends State<AddNoteForm> {
                     BlocProvider.of<AddNoteCubit>(context).addNote(noteModel);
 
                     BlocProvider.of<NotesCubit>(context).fetchNotes();
+                     ScaffoldMessenger.of(context)
+                  .showSnackBar(const SnackBar(content: Text('the note added')));
+ 
                   } else {
                     autovalidateMode = AutovalidateMode.always;
                     setState(() {});
@@ -88,3 +94,4 @@ class _AddNoteFormState extends State<AddNoteForm> {
     );
   }
 }
+
